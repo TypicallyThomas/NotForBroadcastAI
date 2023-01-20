@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b698f86e-f643-4b29-b2e1-ac0a4655098a" name="Changes" comment="Refractored pre-repo code to make sense on GitHub">
-      <change afterPath="$PROJECT_DIR$/bot.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/detection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/zeros.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vision.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/windowcapture.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-    </list>
+    <list default="true" id="b698f86e-f643-4b29-b2e1-ac0a4655098a" name="Changes" comment="Refractored pre-repo code to make sense on GitHub" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -237,7 +229,7 @@
       <workItem from="1674219185539" duration="675000" />
       <workItem from="1674223047917" duration="600000" />
       <workItem from="1674233772382" duration="3693000" />
-      <workItem from="1674237567047" duration="344000" />
+      <workItem from="1674237567047" duration="682000" />
     </task>
     <task id="LOCAL-00001" summary="Refractored pre-repo code to make sense on GitHub">
       <created>1674235806687</created>
@@ -263,7 +255,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="master" />
+                        <option value="main" />
                       </list>
                     </value>
                   </entry>
