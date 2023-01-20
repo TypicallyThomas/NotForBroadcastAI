@@ -1,2 +1,2 @@
 # NotForBroadcastAI
-A bot/ai agent to play Not for Broadcast
+A bot/AI agent to play Not for Broadcast. This project was developed based on tutorials from [Ben Johnson](https://www.youtube.com/playlist?list=PL1m2M8LQlzfKtkKq2lK5xko4X-8EZzFPI) and [sentdex](https://youtube.com/playlist?list=PLQVvvaa0QuDeETZEOy4VdocT7TOjfSA8a). This project is currently under development and is welcoming community input. Feel free to make a pull request if you'd like to help make this project a reality.
