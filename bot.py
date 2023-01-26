@@ -1,3 +1,4 @@
+import globalVariable
 import cv2 as cv
 import numpy as np
 import pyautogui
@@ -37,13 +38,15 @@ class AlexBot:
     MINIMAL_CUT_TIME = 1.2
     MAXIMUM_CUT_TIME = 8.0
     OPTIMAL_CUT_TIME = 3.5
-    DEBUG = True
+    DEBUG = globalVariable.get_value('DEBUG')
     LOWER_RED = np.array([0, 120, 40])
     UPPER_RED = np.array([10, 255, 255])
     LOWER_BLUE = np.array([90, 120, 40])
     UPPER_BLUE = np.array([120, 255, 255])
     LOWER_GREEN = np.array([45, 120, 40])
     UPPER_GREEN = np.array([70, 255, 255])
+    WIDTH_FACTOR = globalVariable.get_value('width_factor')
+    HEIGHT_FACTOR = globalVariable.get_value('height_factor')
 
     # Threading properties
     _stopped = True
@@ -73,7 +76,8 @@ class AlexBot:
         self.state = BotState.INITIALISING
         self.init_timestamp = time()
         self.last_cut = time()
-        self.CHANNEL_THRESHOLD = 100  # Value to determine if an indicator is clearly one color or another
+        # Value to determine if an indicator is clearly one color or another
+        self.CHANNEL_THRESHOLD = globalVariable.get_value('channel_threshold')
         self.time_limit = True
         self.advert_time = False
 
@@ -181,7 +185,7 @@ class AlexBot:
         for index, (x, y) in enumerate(PixelsOfInterest.SCREEN_INDICATORS):
             found = False
             for color in colors:
-                pixel = cv.inRange(self.screenshot_hsv, color[0], color[1])[y, x]
+                pixel = cv.inRange(self.screenshot_hsv, color[0], color[1])[int(y*self.HEIGHT_FACTOR), int(x*self.WIDTH_FACTOR)]
                 if pixel == 255:
                     self.indicator_colors[index] = color[2]
                     found = True
@@ -231,7 +235,8 @@ class AlexBot:
         """ If index pixel is red, press spacebar, otherwise, let go of it"""
         # This doesn't work for political censorship but there's no need to implement that
         mask = cv.inRange(self.screenshot_hsv, self.LOWER_RED, self.UPPER_RED)
-        censor_pixel = mask[PixelsOfInterest.CENSOR_WAVEFORM[1], PixelsOfInterest.CENSOR_WAVEFORM[0]]
+        censor_pixel = mask[int(PixelsOfInterest.CENSOR_WAVEFORM[1] *
+                            self.HEIGHT_FACTOR), int(PixelsOfInterest.CENSOR_WAVEFORM[0]*self.WIDTH_FACTOR)]
         if censor_pixel == 255:
             pyautogui.keyDown("space")
         else:
