@@ -11,5 +11,5 @@ Important to note is that this program needed to specify the window size. It can
 ### Settings
 In order to make the bot recognize vision mixer's indicator color more easily, neutral shots' indicator color needed to be changed from yellow to blue.
 
-# Help required
+## Help required
 Right now, there's a few issues with this program that need addressing. There's a few TODO's in the scripts, but if you spot any issues in the program you'd like to have a go at fixing, feel free to make a pull request.
