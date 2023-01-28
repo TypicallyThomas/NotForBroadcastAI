@@ -6,6 +6,7 @@ import random
 from time import time
 from threading import Thread, Lock
 from vision import PixelsOfInterest
+from vision import Vision
 
 
 class BotState:
@@ -38,15 +39,12 @@ class AlexBot:
     MINIMAL_CUT_TIME = 1.2
     MAXIMUM_CUT_TIME = 8.0
     OPTIMAL_CUT_TIME = 3.5
-    DEBUG = globalVariable.get_value('DEBUG')
     LOWER_RED = np.array([0, 120, 40])
     UPPER_RED = np.array([10, 255, 255])
     LOWER_BLUE = np.array([90, 120, 40])
     UPPER_BLUE = np.array([120, 255, 255])
     LOWER_GREEN = np.array([45, 120, 40])
     UPPER_GREEN = np.array([70, 255, 255])
-    WIDTH_FACTOR = globalVariable.get_value('width_factor')
-    HEIGHT_FACTOR = globalVariable.get_value('height_factor')
 
     # Threading properties
     _stopped = True
@@ -80,6 +78,9 @@ class AlexBot:
         self.CHANNEL_THRESHOLD = globalVariable.get_value('channel_threshold')
         self.time_limit = True
         self.advert_time = False
+        self.WIDTH_FACTOR = globalVariable.get_value('width_factor')
+        self.HEIGHT_FACTOR = globalVariable.get_value('height_factor')
+        self.DEBUG = globalVariable.get_value('DEBUG')
 
     # Threading methods
     def update_targets(self, targets):
@@ -102,6 +103,7 @@ class AlexBot:
         """ Updates the screenshot everytime the main loop is ready to update """
         self._lock.acquire()
         self.screenshot = screenshot
+        self.screenshot_hsv = cv.cvtColor(screenshot, cv.COLOR_BGR2HSV)
         self._lock.release()
 
     def start(self):
@@ -149,7 +151,8 @@ class AlexBot:
                         self._lock.acquire()
                         self.time_limit = True
                         self._lock.release()
-                        shot = max(possible_shots, key=lambda x: x[1])[0]  # Selects the highest scoring camera index
+                        # Selects the highest scoring camera index
+                        shot = max(possible_shots, key=lambda x: x[1])[0]
                     else:
                         # If there's only one shot, we don't want the bot to go cutting around for just anything
                         self._lock.acquire()
@@ -185,7 +188,8 @@ class AlexBot:
         for index, (x, y) in enumerate(PixelsOfInterest.SCREEN_INDICATORS):
             found = False
             for color in colors:
-                pixel = cv.inRange(self.screenshot_hsv, color[0], color[1])[int(y*self.HEIGHT_FACTOR), int(x*self.WIDTH_FACTOR)]
+                pixel = cv.inRange(self.screenshot_hsv, color[0], color[1])[
+                    int(y*self.HEIGHT_FACTOR), int(x*self.WIDTH_FACTOR)]
                 if pixel == 255:
                     self.indicator_colors[index] = color[2]
                     found = True

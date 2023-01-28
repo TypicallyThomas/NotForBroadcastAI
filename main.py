@@ -1,8 +1,11 @@
 import globalVariable
 import configparser
 import cv2 as cv
+import numpy as np
 from windowcapture import WindowCapture
 from detection import Detection
+from vision import Vision
+from vision import PixelsOfInterest
 from bot import AlexBot
 
 # Read config file and set it to global variables
@@ -68,7 +71,15 @@ while True:
     bot.update_screenshot(wincap.screenshot)
 
     if DEBUG:
-        cv.imshow("Debug", wincap.screenshot)
+        debug_pic = wincap.screenshot.copy()
+
+        for index, (x, y) in enumerate(PixelsOfInterest.SCREEN_INDICATORS):
+            debug_pic = Vision.draw_crosshairs(debug_pic, [(
+                int(x*globalVariable.get_value('width_factor')), int(y*globalVariable.get_value('height_factor')))])
+        debug_pic = Vision.draw_crosshairs(debug_pic, [(
+            int(PixelsOfInterest.CENSOR_WAVEFORM[0]*globalVariable.get_value('width_factor')), 
+            int(PixelsOfInterest.CENSOR_WAVEFORM[1]*globalVariable.get_value('height_factor')))])
+        cv.imshow("Debug", debug_pic)
 
     key = cv.waitKey(1)
     if key == ord("q"):
