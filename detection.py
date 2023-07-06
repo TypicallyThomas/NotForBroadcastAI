@@ -1,5 +1,6 @@
 import cv2 as cv
 import numpy as np
+import globalVariable
 from threading import Thread, Lock
 
 
@@ -27,7 +28,12 @@ class Detection:
     def __init__(self):
         self._lock = Lock()
         # Load zero needle
-        self.zero_needle = cv.imread("./images/zeros.jpg", cv.IMREAD_GRAYSCALE)
+        self.unsized_pic = cv.imread("./images/zeros.jpg", cv.IMREAD_GRAYSCALE)
+        self.zero_needle = cv.resize(
+            self.unsized_pic, (0, 0),
+            fx=globalVariable.get_value('width_factor'),
+            fy=globalVariable.get_value('height_factor')
+        )
         self.zero_needle_w, self.zero_needle_h = self.zero_needle.shape[::-1]
 
     def update_screenshot(self, screenshot):
